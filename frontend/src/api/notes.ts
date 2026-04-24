@@ -1,3 +1,5 @@
+import { API_BASE_URL } from '../constants'
+
 export type Note = {
     id: string
     title: string
@@ -25,7 +27,7 @@ async function extractErrorMessage(response: Response): Promise<string> {
 }
 
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
-    const response = await fetch(url, {
+    const response = await fetch(`${API_BASE_URL}${url}`, {
         headers: { 'Content-Type': 'application/json' },
         ...init,
     })
