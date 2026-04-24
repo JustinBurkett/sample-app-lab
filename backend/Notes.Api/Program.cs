@@ -10,10 +10,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Frontend", policy => policy
-        .WithOrigins("http://localhost:5173")
-        .AllowAnyHeader()
-        .AllowAnyMethod());
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://ambitious-smoke-0d07ec50f.7.azurestaticapps.net") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
@@ -28,7 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("Frontend");
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 
